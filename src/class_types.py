@@ -2,7 +2,7 @@
 
 
 class Player(object):
-	"""Base Player Class and Subclasses"""
+	# Base Player Class
 	max_productivity = None
 	impact = None
 	influence = None
@@ -19,6 +19,8 @@ class Player(object):
 			self.current_productivity = self.max_productivity
 
 	def reorg(self, new_location):
+		# Move player locations at the cost of game wide productivity loss
+		# TODO design the scale of reorg functionality. Does it allow the initiating player to move others? If yes, maybe move all others with a lower influence? does it cost more productivity for self?
 		print "{0} initiates a reorg of the teams. Everyone loses {1} productivity".format(self.name, reorg_productivity)
 		Player.current_productivity = Player.current_productivity - reorg_productivity
 		self.location = new_location
@@ -26,6 +28,9 @@ class Player(object):
 		
 
 	def context_switch(self, other_player):
+		# A player can attempt to distract another with a stregth value equal to thier impact, as long as thier influence reaches far enough. 
+		# TODO decide on where to go with influence as a stat. Right now it is being used as a type range stat
+		# TODO it would be cool to create a table of different flavor text that could be called randomly, might be an interesting side project
 		print "{0} attempts to distract {1} with random questions about an API {1} never worked on for a reduction of {2} productivity".format(self.name, other_player, self.impact)
 		if self.in_circle_of_influence(other_player):
 			other_player.current_productivity = other_player.current_productivity - self.impact
@@ -36,6 +41,7 @@ class Player(object):
 
 
 	def in_circle_of_influence(self, other_player):
+		# Way to determine if the player is in range of another 
 		if abs(self.location - other_player.location) < self.influence:
 			return True
 		return False
