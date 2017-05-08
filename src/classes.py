@@ -7,8 +7,9 @@ class Player:
     attack_range = None
     position = None
 
-    def __init__(self, name, position, current_hp=None):
+    def __init__(self, name, class_name, position, current_hp=None):
         self.name = name
+        self.class_name = class_name
         self.position = position
         if current_hp is not None:
             self.current_hp = current_hp
@@ -19,7 +20,7 @@ class Player:
         return str(self)
 
     def __str__(self):
-        return "<{}> {} [{}hp] @ {}".format(self.__class__.__name__, self.name, self.current_hp, self.position)
+        return "<{}> {} {} [{}hp] @ {}".format(self.__class__.__name__, self.name, self.class_name, self.current_hp, self.position)
 
     def move(self, new_position):
         print '{} moves from {} to {}'.format(self.name, self.position, new_position)
